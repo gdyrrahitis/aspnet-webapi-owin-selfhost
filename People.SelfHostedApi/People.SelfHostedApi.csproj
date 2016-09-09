@@ -7,8 +7,8 @@
     <ProjectGuid>{CF01E8B8-0E6C-493A-8CD1-F13C350DE01C}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>User.SelfHostedApi</RootNamespace>
-    <AssemblyName>User.SelfHostedApi</AssemblyName>
+    <RootNamespace>People.SelfHostedApi</RootNamespace>
+    <AssemblyName>People.SelfHostedApi</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

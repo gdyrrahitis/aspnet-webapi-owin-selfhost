@@ -1,4 +1,4 @@
-﻿namespace User.SelfHostedApi
+﻿namespace People.SelfHostedApi
 {
     using System;
     using Microsoft.Owin.Hosting;

@@ -1,4 +1,4 @@
-﻿namespace User.SelfHostedApi.Controllers
+﻿namespace People.SelfHostedApi.Controllers
 {
     using System.Web.Http;
 

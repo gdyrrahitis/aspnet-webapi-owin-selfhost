@@ -1,4 +1,4 @@
-﻿namespace User.SelfHostedApi.Models
+﻿namespace People.SelfHostedApi.Models
 {
     using System.ComponentModel.DataAnnotations;
 
