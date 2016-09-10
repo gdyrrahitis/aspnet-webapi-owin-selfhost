@@ -7,8 +7,10 @@
     {
         static void Main(string[] args)
         {
-            using (WebApp.Start<Startup>("http://localhost:3001"))
+            const string url = "http://localhost:3001";
+            using (WebApp.Start<Startup>(url))
             {
+                Console.WriteLine("Application deployed and hosted in {0}", url);
                 Console.WriteLine("Press any key to terminate...");
                 Console.ReadLine();
             }
