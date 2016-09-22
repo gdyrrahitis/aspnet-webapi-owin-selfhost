@@ -111,7 +111,7 @@
     <Compile Include="App_Start\IdentityConfigc.cs" />
     <Compile Include="App_Start\WebApiRouteConfig.cs" />
     <Compile Include="Controllers\PeopleController.cs" />
-    <Compile Include="Controllers\UserDetailsController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Database\ApplicationDbContext.cs" />
     <Compile Include="Infrastructure\Formatters\BrowserFormatter.cs" />
     <Compile Include="Migrations\201609092316371_InitializeDb.cs" />

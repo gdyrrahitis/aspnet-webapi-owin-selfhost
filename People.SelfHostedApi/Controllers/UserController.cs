@@ -6,7 +6,7 @@
     using Microsoft.AspNet.Identity.Owin;
 
     [Authorize]
-    public class UserDetailsController : ApiController
+    public class UserController : ApiController
     {
         private ApplicationUserManager _userManager;
         public ApplicationUserManager UserManager => 
