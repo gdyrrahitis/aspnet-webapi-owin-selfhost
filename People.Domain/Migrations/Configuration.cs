@@ -1,19 +1,20 @@
-namespace People.SelfHostedApi.Migrations
+namespace People.Domain.Migrations
 {
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using Context;
+    using Entities;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
-    using Models;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Database.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(Database.ApplicationDbContext context)
+        protected override void Seed(ApplicationDbContext context)
         {
             if (!context.Users.Any())
             {

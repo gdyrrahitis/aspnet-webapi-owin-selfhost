@@ -1,8 +1,8 @@
-﻿namespace People.SelfHostedApi.Database
+﻿namespace People.Domain.Context
 {
     using System.Data.Entity;
+    using Entities;
     using Microsoft.AspNet.Identity.EntityFramework;
-    using Models;
 
     public class ApplicationDbContext: IdentityDbContext<IdentityUser>
     {
