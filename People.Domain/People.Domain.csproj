@@ -58,6 +58,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\ApplicationDbContext.cs" />
+    <Compile Include="Context\BaseDbContext.cs" />
+    <Compile Include="Context\IBaseDbContext.cs" />
     <Compile Include="Migrations\201609092316371_InitializeDb.cs" />
     <Compile Include="Migrations\201609092316371_InitializeDb.Designer.cs">
       <DependentUpon>201609092316371_InitializeDb.cs</DependentUpon>

@@ -2,34 +2,36 @@
 {
     using System.Data.Entity;
     using System.Linq;
+    using Context;
 
     public class Repository<T, TKey>: IRepository<T, TKey> where T: class
     {
-        private readonly DbContext _context;
+        private readonly BaseDbContext _context;
 
-        public Repository(DbContext context)
+        public Repository(BaseDbContext context)
         {
             _context = context;
         }
 
         public IQueryable<T> All {
-            get { return _context.Set<T>().Select(s => s); }
+            get { return _context.GetDbSet<T>().Select(s => s); }
         }
 
         public T Find(TKey id)
         {
-            return _context.Set<T>().Find(id);
+            var entity = _context.GetDbSet<T>();
+            return entity.Find(id);
         }
 
         public void Update(T entity)
         {
-            _context.Entry(entity).State = EntityState.Modified;
+            _context.Entry(entity, entry => entry.State = EntityState.Modified);
             _context.SaveChanges();
         }
 
         public void Delete(T entity)
         {
-            _context.Entry(entity).State = EntityState.Deleted;
+            _context.Entry(entity, entry => entry.State = EntityState.Deleted);
             _context.SaveChanges();
         }
     }
