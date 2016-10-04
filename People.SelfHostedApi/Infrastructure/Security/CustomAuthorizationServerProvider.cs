@@ -1,11 +1,11 @@
-﻿namespace People.SelfHostedApi.Security
+﻿namespace People.SelfHostedApi.Infrastructure.Security
 {
     using System.Collections.Generic;
     using System.Security.Claims;
     using System.Threading.Tasks;
     using Microsoft.AspNet.Identity;
-    using Microsoft.Owin.Security.OAuth;
     using Microsoft.AspNet.Identity.Owin;
+    using Microsoft.Owin.Security.OAuth;
 
     public class CustomAuthorizationServerProvider : OAuthAuthorizationServerProvider
     {

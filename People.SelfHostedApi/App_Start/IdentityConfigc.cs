@@ -1,6 +1,6 @@
 ﻿namespace People.SelfHostedApi
 {
-    using Database;
+    using Domain.Context;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Microsoft.AspNet.Identity.Owin;

@@ -2,11 +2,11 @@
 {
     using System;
     using System.Web.Http;
-    using Database;
+    using Domain.Context;
+    using Infrastructure.Security;
     using Microsoft.Owin;
     using Microsoft.Owin.Security.OAuth;
     using Owin;
-    using Security;
 
     public class Startup
     {
@@ -17,6 +17,7 @@
 
             var configuration = new HttpConfiguration();
             WebApiRouteConfig.Register(configuration);
+            AutofacConfig.Register(configuration);
 
             app.UseOAuthAuthorizationServer(new OAuthAuthorizationServerOptions
             {

@@ -33,6 +33,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.3.5.0\lib\net40\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac.Integration.Owin, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.Owin.4.0.0\lib\net45\Autofac.Integration.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac.Integration.WebApi, Version=3.4.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.WebApi2.3.4.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac.Integration.WebApi.Owin, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.WebApi2.Owin.4.0.0\lib\net45\Autofac.Integration.WebApi.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -108,21 +124,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="App_Start\IdentityConfigc.cs" />
     <Compile Include="App_Start\WebApiRouteConfig.cs" />
     <Compile Include="Controllers\PeopleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Database\ApplicationDbContext.cs" />
     <Compile Include="Infrastructure\Formatters\BrowserFormatter.cs" />
-    <Compile Include="Migrations\201609092316371_InitializeDb.cs" />
-    <Compile Include="Migrations\201609092316371_InitializeDb.Designer.cs">
-      <DependentUpon>201609092316371_InitializeDb.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Person.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Security\CustomAuthorizationServerProvider.cs" />
+    <Compile Include="Infrastructure\Security\CustomAuthorizationServerProvider.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -130,9 +140,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201609092316371_InitializeDb.resx">
-      <DependentUpon>201609092316371_InitializeDb.cs</DependentUpon>
-    </EmbeddedResource>
+    <ProjectReference Include="..\People.Domain\People.Domain.csproj">
+      <Project>{ff9931f2-02f8-4432-9dc9-cd2e5116a617}</Project>
+      <Name>People.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\People.Services\People.Services.csproj">
+      <Project>{6c667d3f-8ab6-432b-ac0f-6862b79e3c4a}</Project>
+      <Name>People.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
