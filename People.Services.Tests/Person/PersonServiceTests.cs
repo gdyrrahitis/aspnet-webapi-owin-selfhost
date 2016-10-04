@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Domain.Context;
     using Domain.Entities;
     using Domain.Repository;
     using Moq;
@@ -53,7 +52,7 @@
             var service = new PersonService(_repositoryMock.Object);
 
             // Act
-            var result = service.GetPeople();
+            var result = service.GetPeople().ToList();
 
             // Assert
             Assert.IsTrue(result.Any());
