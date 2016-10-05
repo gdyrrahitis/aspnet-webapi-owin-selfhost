@@ -1,28 +1,35 @@
 ﻿namespace People.SelfHostedApi.Controllers
 {
-    using System.Data.Entity;
     using System.Linq;
     using System.Web.Http;
-    using Domain.Entities;
+    using Services.Person;
 
     public class PeopleController : ApiController
     {
-        private readonly DbContext _context;
+        private readonly IPersonService _service;
 
-        public PeopleController(DbContext context)
+        public PeopleController(IPersonService service)
         {
-            _context = context;
+            _service = service;
         }
 
         public IHttpActionResult Get()
         {
-            var people = _context.Set<Person>().ToList();
-            return Ok(people);
+            var people = _service.GetPeople().ToList();
+            if (people.Any())
+                return Ok(people);
+
+            return NotFound();
         }
 
         public IHttpActionResult Get(int id)
         {
-            var person = _context.Set<Person>().Find(id);
+            if (id < 0) return BadRequest($"{nameof(id)} should not be negative.");
+
+            var person = _service.GetPerson(id);
+            if (person == null)
+                return NotFound();
+
             return Ok(person);
         }
     }

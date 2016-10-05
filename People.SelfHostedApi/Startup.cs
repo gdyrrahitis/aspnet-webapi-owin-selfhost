@@ -16,8 +16,8 @@
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
 
             var configuration = new HttpConfiguration();
+            AutofacConfig.Register(configuration, app);
             WebApiRouteConfig.Register(configuration);
-            AutofacConfig.Register(configuration);
 
             app.UseOAuthAuthorizationServer(new OAuthAuthorizationServerOptions
             {
@@ -27,7 +27,6 @@
                 Provider = new CustomAuthorizationServerProvider()
             });
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
-
             app.UseWebApi(configuration);
         }
     }
