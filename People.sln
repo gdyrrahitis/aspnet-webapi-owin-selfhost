@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{5075B60A-2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{8F3CD086-5183-479D-9710-430779346F5C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestSuites", "TestSuites", "{8C1D7749-2D81-41CE-85E8-61B41703F410}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test.Suites", "Test.Suites", "{8C1D7749-2D81-41CE-85E8-61B41703F410}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
