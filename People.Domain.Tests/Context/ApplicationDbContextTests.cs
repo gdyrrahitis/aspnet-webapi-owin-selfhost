@@ -59,7 +59,9 @@
             var entityStub = new EntityStub();
 
             // Act | Assert
+#pragma warning disable CS0618 // Type or member is obsolete
             Assert.Throws<ApplicationException>(() => context.Entry(entityStub), "Use overload for unit tests.");
+#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         [Test]
@@ -69,8 +71,12 @@
             var context = ApplicationDbContext.Create();
 
             // Act | Assert
+#pragma warning disable CS0618 // Type or member is obsolete
             Assert.Throws<ApplicationException>(() => context.Set(typeof(EntityStub)), "Use overload for unit tests.");
+#pragma warning restore CS0618 // Type or member is obsolete
+#pragma warning disable CS0618 // Type or member is obsolete
             Assert.Throws<ApplicationException>(() => context.Set<EntityStub>(), "Use overload for unit tests.");
+#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         private class EntityStub { }
