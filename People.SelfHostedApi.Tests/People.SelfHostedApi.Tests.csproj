@@ -59,6 +59,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionSelection\Common\CommonMethods.cs" />
     <Compile Include="ActionSelection\PeopleController\PeopleControllerActionSelectionTests.cs" />
     <Compile Include="ActionSelection\UserController\UserControllerActionSelectionTests.cs" />
     <Compile Include="Controllers\PeopleControllerTests.cs" />
