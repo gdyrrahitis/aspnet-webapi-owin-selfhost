@@ -4,11 +4,12 @@
     using System.Security.Claims;
     using System.Threading.Tasks;
     using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security.OAuth;
 
     public class CustomAuthorizationServerProvider : OAuthAuthorizationServerProvider
     {
+        public ApplicationUserManager UserManager { get; set; }
+
         public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
             context.Validated();
@@ -19,8 +20,7 @@
         {
             context.OwinContext.Response.Headers.Add(new KeyValuePair<string, string[]>("Access-Control-Allow-Origin", new[] { "*" }));
 
-            var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
-            var user = userManager.Find(context.UserName, context.Password);
+            var user = UserManager.Find(context.UserName, context.Password);
             if (user == null)
             {
                 context.SetError("invalid_grant", "Username and password do not match.");

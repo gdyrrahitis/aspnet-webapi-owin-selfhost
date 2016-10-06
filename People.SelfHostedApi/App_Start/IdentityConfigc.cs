@@ -8,9 +8,7 @@
 
     public class ApplicationUserManager : UserManager<IdentityUser>
     {
-        public ApplicationUserManager(IUserStore<IdentityUser> store) : base(store)
-        {
-        }
+        public ApplicationUserManager(IUserStore<IdentityUser> store) : base(store) { }
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options,
             IOwinContext context)

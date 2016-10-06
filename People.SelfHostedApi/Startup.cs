@@ -24,7 +24,7 @@
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(30),
-                Provider = new CustomAuthorizationServerProvider()
+                Provider = configuration.DependencyResolver.GetService(typeof(CustomAuthorizationServerProvider)) as CustomAuthorizationServerProvider
             });
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
             app.UseWebApi(configuration);

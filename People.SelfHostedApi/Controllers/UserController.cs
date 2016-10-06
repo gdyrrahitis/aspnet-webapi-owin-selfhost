@@ -1,16 +1,12 @@
 ﻿namespace People.SelfHostedApi.Controllers
 {
-    using System.Net.Http;
     using System.Web.Http;
     using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.Owin;
 
     [Authorize]
     public class UserController : ApiController
     {
-        private ApplicationUserManager _userManager;
-        public ApplicationUserManager UserManager => 
-            _userManager ?? (_userManager = Request.GetOwinContext().GetUserManager<ApplicationUserManager>());
+        public ApplicationUserManager UserManager { get; set; }
 
         public IHttpActionResult Get()
         {
