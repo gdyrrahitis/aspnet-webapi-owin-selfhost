@@ -12,9 +12,6 @@
     {
         public static void Configuration(IAppBuilder app)
         {
-            app.CreatePerOwinContext<ApplicationDbContext>(ApplicationDbContext.Create);
-            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
-
             var configuration = new HttpConfiguration();
             AutofacConfig.Register(configuration, app);
             WebApiRouteConfig.Register(configuration);
