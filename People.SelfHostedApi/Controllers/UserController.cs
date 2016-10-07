@@ -12,6 +12,8 @@
         {
             var id = User.Identity.GetUserId();
             var user = UserManager.FindById(id);
+            if (user == null)
+                return InternalServerError();
             return Ok(user);
         }
     }
