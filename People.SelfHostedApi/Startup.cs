@@ -2,7 +2,6 @@
 {
     using System;
     using System.Web.Http;
-    using Domain.Context;
     using Infrastructure.Security;
     using Microsoft.Owin;
     using Microsoft.Owin.Security.OAuth;
