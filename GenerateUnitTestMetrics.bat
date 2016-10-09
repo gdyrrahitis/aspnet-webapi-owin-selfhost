@@ -31,6 +31,15 @@ exit /b %errorlevel%
 -mergebyhash ^
 -skipautoprops ^
 -output:"%~dp0GeneratedReports\PeopleReport.xml"
+
+
+"%~dp0.\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe" ^
+-target:"C:\Program Files (x86)\NUnit.org\nunit-console\nunit3-console.exe" 
+-targetargs:"/nologo %~dp0People.SelfHostedApi.Tests\bin\Debug\People.SelfHostedApi.Tests.dll /noshadow" 
+-filter:"+[DotNetAppStarterKit.SampleMvc]DotNetAppStarterKit.SampleMvc.Controllers* +[DotNetAppStarterKit.SampleMvc]DotNetAppStarterKit.SampleMvc.DataProject* -[DotNetAppStarterKit.SampleMvc]DotNetAppStarterKit.SampleMvc.DataProject.Context.DummyDataContext -[DotNetAppStarterKit.SampleMvc]DotNetAppStarterKit.SampleMvc.Controllers.T4MVC* +[DotNetAppStarterKit.SampleMvc]DotNetAppStarterKit.SampleMvc.Models*" 
+-excludebyattribute:"System.CodeDom.Compiler.GeneratedCodeAttribute" 
+-register:user 
+-output:"PeopleReport.xml"
 @pause
 exit /b %errorlevel%
  

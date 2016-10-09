@@ -26,11 +26,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution_Items", "Solution_
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit Test Metrics", "Unit Test Metrics", "{DADAD262-FCCC-4EBC-9DF6-324B4C58B77B}"
-	ProjectSection(SolutionItems) = preProject
-		GenerateUnitTestMetrics.bat = GenerateUnitTestMetrics.bat
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,6 +67,5 @@ Global
 		{FF9931F2-02F8-4432-9DC9-CD2E5116A617} = {5075B60A-2C63-44BB-9464-BDE257455B7E}
 		{D306AD24-E919-45E6-AA27-B9140D62B1FA} = {8C1D7749-2D81-41CE-85E8-61B41703F410}
 		{4DFD42D4-6C18-4B21-ABD2-91E25D09C333} = {8C1D7749-2D81-41CE-85E8-61B41703F410}
-		{DADAD262-FCCC-4EBC-9DF6-324B4C58B77B} = {8AD843C9-CA73-40DD-8DEA-963E742CA0D8}
 	EndGlobalSection
 EndGlobal
