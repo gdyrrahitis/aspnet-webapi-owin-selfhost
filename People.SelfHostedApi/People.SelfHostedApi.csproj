@@ -125,7 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AutofacConfig.cs" />
-    <Compile Include="App_Start\IdentityConfigc.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\WebApiRouteConfig.cs" />
     <Compile Include="Controllers\PeopleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
