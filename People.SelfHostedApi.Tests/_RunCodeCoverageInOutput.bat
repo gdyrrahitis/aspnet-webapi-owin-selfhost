@@ -3,3 +3,7 @@
 
 "..\..\..\packages\ReportGenerator.2.4.5.0\tools\ReportGenerator.exe" "-reports:_CodeCoverageResult.xml" "-targetdir:_CodeCoverageReport"
 @pause
+
+:RunLaunchReport
+start "report" "_CodeCoverageReport\index.htm"
+exit /b %errorlevel%
