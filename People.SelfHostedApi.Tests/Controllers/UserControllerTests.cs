@@ -35,8 +35,6 @@
             var mockIdentity = new Mock<ClaimsIdentity>();
             mockIdentity.Setup(m => m.FindFirst(It.Is<string>(c => c == ClaimTypes.NameIdentifier)))
                 .Returns(claim);
-            //mockIdentity.Setup(m => m.FindFirst(It.Is<string>(c => c == ClaimTypes.Name)))
-            //    .Returns(() => null);
             _userPrincipalMock.Setup(m => m.Identity).Returns(mockIdentity.Object);
 
             _userStoreMock.Setup(m => m.FindByIdAsync(It.IsAny<string>())).ReturnsAsync(user);
