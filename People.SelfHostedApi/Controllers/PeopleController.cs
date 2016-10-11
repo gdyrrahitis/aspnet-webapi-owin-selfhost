@@ -24,7 +24,7 @@
 
         public IHttpActionResult Get(int id)
         {
-            if (id < 0) return BadRequest($"{nameof(id)} should not be negative.");
+            if (id < 0) return BadRequest($"{nameof(id)} is not valid.");
 
             var person = _service.GetPerson(id);
             if (person == null)
