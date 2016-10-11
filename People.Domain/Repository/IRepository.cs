@@ -1,6 +1,5 @@
 ﻿namespace People.Domain.Repository
 {
-    using System.Data.Entity;
     using System.Linq;
 
     public interface IRepository<T, in TKey>
