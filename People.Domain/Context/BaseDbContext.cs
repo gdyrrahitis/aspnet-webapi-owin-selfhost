@@ -11,9 +11,9 @@
 
         protected BaseDbContext(string connectionString, bool throwIfV1Schema) : base(connectionString, throwIfV1Schema) { }
 
-        public virtual IDbSet<TU> GetDbSet<TU>() where TU : class
+        public virtual IDbSet<T> GetDbSet<T>() where T : class
         {
-            return base.Set<TU>();
+            return base.Set<T>();
         }
 
         public virtual void Entry<T>(T entity, Action<DbEntityEntry<T>> stateAction) where T : class
