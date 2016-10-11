@@ -2,6 +2,7 @@
 {
     using System;
     using System.Web.Http;
+    using Autofac;
     using Infrastructure.Security;
     using Microsoft.Owin;
     using Microsoft.Owin.Security.OAuth;
@@ -11,10 +12,13 @@
     {
         public static void Configuration(IAppBuilder app)
         {
+            IContainer container;
             var configuration = new HttpConfiguration();
-            AutofacConfig.Register(configuration, app);
+            AutofacConfig.Register(configuration, out container);
             WebApiRouteConfig.Register(configuration);
 
+            app.UseAutofacMiddleware(container);
+            app.UseAutofacWebApi(configuration);
             app.UseOAuthAuthorizationServer(new OAuthAuthorizationServerOptions
             {
                 AllowInsecureHttp = true,

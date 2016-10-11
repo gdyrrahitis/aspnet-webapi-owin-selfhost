@@ -11,11 +11,10 @@
     using Infrastructure.Security;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Services.Person;
-    using Owin;
 
     public class AutofacConfig
     {
-        public static void Register(HttpConfiguration configuration, IAppBuilder app)
+        public static void Register(HttpConfiguration configuration, out IContainer container)
         {
             var builder = new ContainerBuilder();
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
@@ -31,11 +30,8 @@
             builder.RegisterType<UserController>().PropertiesAutowired();
             builder.RegisterType<CustomAuthorizationServerProvider>().PropertiesAutowired();
 
-            var container = builder.Build();
+            container = builder.Build();
             configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
-
-            app.UseAutofacMiddleware(container);
-            app.UseAutofacWebApi(configuration);
         }
     }
 }
