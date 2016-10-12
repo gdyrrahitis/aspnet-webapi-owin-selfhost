@@ -32,16 +32,6 @@
         }
 
         [Test]
-        public void ApplicationDbContext_IBaseDbContextContractIsImplemented_Test()
-        {
-            // Arrange
-            var instance = ApplicationDbContext.Create();
-
-            // Act | Assert
-            Assert.IsInstanceOf<IBaseDbContext>(instance);
-        }
-
-        [Test]
         public void ApplicationDbContext_IsDerivingFromIdentityDbContext_Test()
         {
             // Arrange

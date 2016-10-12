@@ -55,7 +55,7 @@
         }
 
         [Test]
-        public void Update_EntryWasCalledOnce_SaveChangesWasCalledOnce_Test()
+        public void Update_EntryWasCalledTwiceForDetachingAndModifying_SaveChangesWasCalledOnce_Test()
         {
             // Arrange
             _dbContextMock.Setup(m => m.Entry(It.IsAny<EntityStub>(), It.IsAny<Action<DbEntityEntry<EntityStub>>>())).Verifiable();
@@ -80,6 +80,21 @@
 
             // Act
             repository.Delete(new EntityStub());
+
+            // Assert
+            _dbContextMock.Verify(m => m.Entry(It.IsAny<EntityStub>(), It.IsAny<Action<DbEntityEntry<EntityStub>>>()), Times.Once());
+            _dbContextMock.Verify(m => m.SaveChanges(), Times.Once());
+        }
+
+        [Test]
+        public void Create_EntryWasCalledOnce_SaveChangesWasCalledOnce_Test() {
+            // Arrange
+            _dbContextMock.Setup(m => m.Entry(It.IsAny<EntityStub>(), It.IsAny<Action<DbEntityEntry<EntityStub>>>())).Verifiable();
+            _dbContextMock.Setup(m => m.SaveChanges()).Verifiable();
+            var repository = new Repository<EntityStub, string>(_dbContextMock.Object);
+
+            // Act
+            repository.Create(new EntityStub());
 
             // Assert
             _dbContextMock.Verify(m => m.Entry(It.IsAny<EntityStub>(), It.IsAny<Action<DbEntityEntry<EntityStub>>>()), Times.Once());

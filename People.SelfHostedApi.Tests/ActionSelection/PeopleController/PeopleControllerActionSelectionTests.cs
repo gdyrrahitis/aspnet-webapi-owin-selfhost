@@ -14,6 +14,9 @@
         [Test]
         [TestCase("http://localhost:3001/api/people/", "GET", typeof(PeopleController), "Get")]
         [TestCase("http://localhost:3001/api/people/1", "GET", typeof(PeopleController), "Get")]
+        [TestCase("http://localhost:3001/api/people/1", "PUT", typeof(PeopleController), "Put")]
+        [TestCase("http://localhost:3001/api/people/1", "DELETE", typeof(PeopleController), "Delete")]
+        [TestCase("http://localhost:3001/api/people/", "POST", typeof(PeopleController), "Post")]
         public void CorrectControllerAndActionAreSelected_Test(string url, string method, Type controller, string action)
         {
             // Arrange

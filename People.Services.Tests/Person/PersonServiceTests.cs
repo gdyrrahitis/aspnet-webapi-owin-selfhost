@@ -130,6 +130,7 @@
                 Age = age
             };
             var invalidPerson = new Person();
+            _repositoryMock.Setup(m => m.Find(It.Is<int>(s => s == 4))).Returns(person);
             _repositoryMock.Setup(m => m.Delete(It.Is<Person>(p => p == person)))
                 .Verifiable();
             var service = new PersonService(_repositoryMock.Object);
@@ -140,6 +141,31 @@
             // Assert
             _repositoryMock.Verify(m => m.Delete(It.Is<Person>(p => p == person)), Times.Once());
             _repositoryMock.Verify(m => m.Delete(It.Is<Person>(p => p == invalidPerson)), Times.Never());
+        }
+
+        [Test]
+        public void Create_ShouldCallRepositoryCreateOnce_Test() {
+            // Arrange
+            const int id = 4;
+            const string name = "George";
+            const int age = 26;
+            var person = new Person
+            {
+                Id = id,
+                Name = name,
+                Age = age
+            };
+            var invalidPerson = new Person();
+            _repositoryMock.Setup(m => m.Create(It.Is<Person>(p => p == person)))
+                .Verifiable();
+            var service = new PersonService(_repositoryMock.Object);
+
+            // Act
+            service.Create(person);
+
+            // Assert
+            _repositoryMock.Verify(m => m.Create(It.Is<Person>(p => p == person)), Times.Once());
+            _repositoryMock.Verify(m => m.Create(It.Is<Person>(p => p == invalidPerson)), Times.Never());
         }
     }
 }

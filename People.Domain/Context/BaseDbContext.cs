@@ -5,7 +5,7 @@
     using System.Data.Entity.Infrastructure;
     using Microsoft.AspNet.Identity.EntityFramework;
 
-    public abstract class BaseDbContext : IdentityDbContext<IdentityUser>, IBaseDbContext
+    public abstract class BaseDbContext : IdentityDbContext<IdentityUser>
     {
         protected BaseDbContext() : base("DefaultConnection", throwIfV1Schema: false) { }
 
@@ -21,6 +21,7 @@
             stateAction(base.Entry(entity));
         }
 
+        #region Obsolete methods, hides superclass implementation
         [Obsolete("Use overload for unit tests.")]
         public new DbEntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class
         {
@@ -38,5 +39,6 @@
         {
             throw new ApplicationException("Use overload for unit tests.");
         }
+        #endregion
     }
 }

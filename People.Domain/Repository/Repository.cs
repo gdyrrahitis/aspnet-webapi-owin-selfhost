@@ -1,5 +1,6 @@
 ﻿namespace People.Domain.Repository
 {
+    using System;
     using System.Data.Entity;
     using System.Linq;
     using Context;
@@ -32,6 +33,12 @@
         public void Delete(T entity)
         {
             _context.Entry(entity, entry => entry.State = EntityState.Deleted);
+            _context.SaveChanges();
+        }
+
+        public void Create(T entity)
+        {
+            _context.Entry(entity, entry => entry.State = EntityState.Added);
             _context.SaveChanges();
         }
     }

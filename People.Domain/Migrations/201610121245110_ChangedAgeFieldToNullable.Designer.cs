@@ -7,13 +7,13 @@ namespace People.Domain.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.0-30225")]
-    public sealed partial class InitializeDb : IMigrationMetadata
+    public sealed partial class ChangedAgeFieldToNullable : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitializeDb));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ChangedAgeFieldToNullable));
         
         string IMigrationMetadata.Id
         {
-            get { return "201609092316371_InitializeDb"; }
+            get { return "201610121245110_ChangedAgeFieldToNullable"; }
         }
         
         string IMigrationMetadata.Source

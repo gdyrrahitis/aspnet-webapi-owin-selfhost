@@ -59,10 +59,13 @@
   <ItemGroup>
     <Compile Include="Context\ApplicationDbContext.cs" />
     <Compile Include="Context\BaseDbContext.cs" />
-    <Compile Include="Context\IBaseDbContext.cs" />
     <Compile Include="Migrations\201609092316371_InitializeDb.cs" />
     <Compile Include="Migrations\201609092316371_InitializeDb.Designer.cs">
       <DependentUpon>201609092316371_InitializeDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610121245110_ChangedAgeFieldToNullable.cs" />
+    <Compile Include="Migrations\201610121245110_ChangedAgeFieldToNullable.Designer.cs">
+      <DependentUpon>201610121245110_ChangedAgeFieldToNullable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Entities\Person.cs" />
@@ -73,6 +76,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201609092316371_InitializeDb.resx">
       <DependentUpon>201609092316371_InitializeDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610121245110_ChangedAgeFieldToNullable.resx">
+      <DependentUpon>201610121245110_ChangedAgeFieldToNullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
