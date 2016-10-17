@@ -123,7 +123,7 @@
         public void PeopleController_Post_PersonToService_ReturnsCreatedResult_Test()
         {
             // Arrange
-            var person = new Person()
+            var person = new Person
             {
                 Id = 1,
                 Name = "George",
@@ -167,7 +167,7 @@
         {
             // Arrange
             const int id = 1;
-            var person = new Person()
+            var person = new Person
             {
                 Id = 1,
                 Name = "George",
@@ -210,7 +210,7 @@
             // Arrange
             const int id = 1;
             const int invalidId = 2;
-            var person = new Person()
+            var person = new Person
             {
                 Id = id,
                 Name = "George",
@@ -266,7 +266,6 @@
         {
             // Arrange
             const int invalidId = 2;
-            var person = new Person();
             _personService.Setup(m => m.GetPerson(It.Is<int>(s => s == invalidId))).Returns(() => null);
             var controller = new PeopleController(_personService.Object);
 
