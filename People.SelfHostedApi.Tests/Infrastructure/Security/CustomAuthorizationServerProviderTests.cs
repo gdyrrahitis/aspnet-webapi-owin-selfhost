@@ -24,7 +24,7 @@
         }
 
         [Test]
-        public async Task GivenGrantResourceOwnerCredentials_WhenUserIsNotFound_ThenGeneratesInvalidGrant_Test()
+        public async Task GrantResourceOwnerCredentials_UserIsNotFound_GeneratesInvalidGrant_Test()
         {
             // Arrange
             const string username = "user1";
@@ -46,7 +46,7 @@
         }
 
         [Test]
-        public async Task GivenGrantResourceOwnerCredentials_WhenUserIsFound_ThenGeneratesValidGrant_Test()
+        public async Task GrantResourceOwnerCredentials_UserIsFound_GeneratesValidGrant_Test()
         {
             // Arrange
             const string id = "12345";
