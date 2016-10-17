@@ -8,7 +8,6 @@
     using NUnit.Framework;
     using SelfHostedApi.Controllers;
     using Services.Person;
-    using System.Web.Http;
     using System.Net.Http;
 
     [TestFixture]
