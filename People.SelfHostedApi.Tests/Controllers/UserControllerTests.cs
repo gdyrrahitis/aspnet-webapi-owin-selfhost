@@ -23,7 +23,7 @@
         }
 
         [Test]
-        public void GivenUserControllerGet_WhenCallingGetActionAndAuthenticatedUserIsFound_ThenReturns200OKWithUserInstanceAsContent_Test()
+        public void UserControllerGet_CallingGetActionAndAuthenticatedUserIsFound_Returns200OKWithUserInstanceAsContent_Test()
         {
             // Arrange
             const string username = "user";
@@ -56,7 +56,7 @@
         }
 
         [Test]
-        public void GivenUserControllerGet_WhenCallingGetActionAndAuthenticatedUserIsNotFound_ThenReturns500ServerException_Test()
+        public void UserControllerGet_CallingGetActionAndAuthenticatedUserIsNotFound_Returns500ServerException_Test()
         {
             // Arrange
             var mockIdentity = new Mock<ClaimsIdentity>();
