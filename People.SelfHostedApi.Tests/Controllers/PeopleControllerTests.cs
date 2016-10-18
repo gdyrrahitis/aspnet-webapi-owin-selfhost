@@ -260,6 +260,7 @@
 
             // Assert
             Assert.IsNotNull(result);
+            Assert.AreEqual("id is not valid.", result.Message);
         }
 
         [Test]
