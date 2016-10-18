@@ -61,7 +61,8 @@
 
         public IHttpActionResult Delete(int id)
         {
-            if (id < 0) return BadRequest($"{nameof(id)} is not valid.");
+            if (id < 0)
+                return BadRequest($"{nameof(id)} is not valid.");
 
             var person = _service.GetPerson(id);
             if (person == null)
