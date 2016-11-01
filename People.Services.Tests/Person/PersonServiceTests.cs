@@ -7,6 +7,7 @@
     using Moq;
     using NUnit.Framework;
     using Services.Person;
+    using static NUnit.Framework.Assert;
 
     [TestFixture]
     public class PersonServiceTests
@@ -26,7 +27,7 @@
             var instance = new PersonService(_repositoryMock.Object);
 
             // Act | Assert
-            Assert.IsInstanceOf<PersonService>(instance);
+            IsInstanceOf<PersonService>(instance);
         }
 
         [Test]
@@ -36,7 +37,7 @@
             var instance = new PersonService(_repositoryMock.Object);
 
             // Act | Assert
-            Assert.IsInstanceOf<IPersonService>(instance);
+            IsInstanceOf<IPersonService>(instance);
         }
 
         [Test]
@@ -55,8 +56,8 @@
             var result = service.GetPeople().ToList();
 
             // Assert
-            Assert.IsTrue(result.Any());
-            Assert.AreEqual(people.Count, result.Count());
+            IsTrue(result.Any());
+            AreEqual(people.Count, result.Count());
         }
 
         [Test]
@@ -82,12 +83,12 @@
             var invalidResult = service.GetPerson(invalidId);
 
             // Assert
-            Assert.IsNotNull(result);
-            Assert.IsNull(invalidResult);
-            Assert.IsInstanceOf<Person>(result);
-            Assert.AreEqual(id, result.Id);
-            Assert.AreEqual(name, result.Name);
-            Assert.AreEqual(age, result.Age);
+            IsNotNull(result);
+            IsNull(invalidResult);
+            IsInstanceOf<Person>(result);
+            AreEqual(id, result.Id);
+            AreEqual(name, result.Name);
+            AreEqual(age, result.Age);
         }
 
         [Test]

@@ -4,6 +4,7 @@
     using Domain.Context;
     using Microsoft.AspNet.Identity.EntityFramework;
     using NUnit.Framework;
+    using static NUnit.Framework.Assert;
 
     [TestFixture]
     public class ApplicationDbContextTests
@@ -18,7 +19,7 @@
             var result = createDelegate();
 
             // Assert
-            Assert.IsInstanceOf<ApplicationDbContext>(result);
+            IsInstanceOf<ApplicationDbContext>(result);
         }
 
         [Test]
@@ -28,7 +29,7 @@
             var instance = ApplicationDbContext.Create();
 
             // Act | Assert
-            Assert.IsInstanceOf<BaseDbContext>(instance);
+            IsInstanceOf<BaseDbContext>(instance);
         }
 
         [Test]
@@ -38,7 +39,7 @@
             var instance = ApplicationDbContext.Create();
 
             // Act | Assert
-            Assert.IsInstanceOf<IdentityDbContext<IdentityUser>>(instance);
+            IsInstanceOf<IdentityDbContext<IdentityUser>>(instance);
         }
 
         [Test]
@@ -50,7 +51,7 @@
 
             // Act | Assert
 #pragma warning disable CS0618 // Type or member is obsolete
-            Assert.Throws<ApplicationException>(() => context.Entry(entityStub), "Use overload for unit tests.");
+            Throws<ApplicationException>(() => context.Entry(entityStub), "Use overload for unit tests.");
 #pragma warning restore CS0618 // Type or member is obsolete
         }
 
@@ -62,10 +63,10 @@
 
             // Act | Assert
 #pragma warning disable CS0618 // Type or member is obsolete
-            Assert.Throws<ApplicationException>(() => context.Set(typeof(EntityStub)), "Use overload for unit tests.");
+            Throws<ApplicationException>(() => context.Set(typeof(EntityStub)), "Use overload for unit tests.");
 #pragma warning restore CS0618 // Type or member is obsolete
 #pragma warning disable CS0618 // Type or member is obsolete
-            Assert.Throws<ApplicationException>(() => context.Set<EntityStub>(), "Use overload for unit tests.");
+            Throws<ApplicationException>(() => context.Set<EntityStub>(), "Use overload for unit tests.");
 #pragma warning restore CS0618 // Type or member is obsolete
         }
 

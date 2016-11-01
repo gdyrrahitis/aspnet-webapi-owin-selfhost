@@ -3,6 +3,7 @@
     using System.Net.Http;
     using System.Web.Http;
     using NUnit.Framework;
+    using static NUnit.Framework.Assert;
 
     [TestFixture]
     public class RoutingTests
@@ -24,11 +25,11 @@
             var routeData = config.Routes.GetRouteData(request);
 
             // Assert
-            Assert.AreEqual(exists, routeData != null);
+            AreEqual(exists, routeData != null);
             if (exists)
             {
-                Assert.AreEqual(controller, routeData.Values["controller"]);
-                Assert.AreEqual(id ?? (object)RouteParameter.Optional, routeData.Values["id"]);
+                AreEqual(controller, routeData.Values["controller"]);
+                AreEqual(id ?? (object)RouteParameter.Optional, routeData.Values["id"]);
             }
         }
 

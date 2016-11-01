@@ -7,6 +7,7 @@
     using Domain.Repository;
     using Moq;
     using NUnit.Framework;
+    using static NUnit.Framework.Assert;
 
     [TestFixture]
     public class RepositoryTests
@@ -27,7 +28,7 @@
             var instance = new Repository<object, string>(_dbContextMock.Object);
 
             // Act | Assert
-            Assert.IsInstanceOf(type, instance);
+            IsInstanceOf(type, instance);
         }
 
         [Test]
@@ -49,9 +50,9 @@
             var result = repository.Find(key);
 
             // Assert
-            Assert.IsNull(nullResult);
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOf<EntityStub>(result);
+            IsNull(nullResult);
+            IsNotNull(result);
+            IsInstanceOf<EntityStub>(result);
         }
 
         [Test]

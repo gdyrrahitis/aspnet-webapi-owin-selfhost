@@ -10,6 +10,7 @@
     using Moq;
     using NUnit.Framework;
     using SelfHostedApi.Infrastructure.Security;
+    using static NUnit.Framework.Assert;
 
     [TestFixture]
     public class CustomAuthorizationServerProviderTests
@@ -42,7 +43,7 @@
 
             // Assert
             _applicationUserManagerMock.Verify(m => m.FindAsync(It.Is<string>(u => u == username), It.Is<string>(u => u == password)), Times.Once());
-            Assert.AreEqual(true, contextMock.Object.HasError);
+            AreEqual(true, contextMock.Object.HasError);
         }
 
         [Test]
@@ -69,7 +70,7 @@
 
             // Assert
             _applicationUserManagerMock.Verify(m => m.FindAsync(It.Is<string>(u => u == username), It.Is<string>(u => u == password)), Times.Once());
-            Assert.AreEqual(false, contextMock.Object.HasError);
+            AreEqual(false, contextMock.Object.HasError);
         }
     }
 }

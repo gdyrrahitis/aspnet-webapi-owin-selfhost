@@ -9,6 +9,7 @@
     using SelfHostedApi.Controllers;
     using Services.Person;
     using System.Net.Http;
+    using static NUnit.Framework.Assert;
 
     [TestFixture]
     public class PeopleControllerTests
@@ -28,7 +29,7 @@
             var controller = new PeopleController(_personService.Object);
 
             // Act | Assert
-            Assert.IsInstanceOf<PeopleController>(controller);
+            IsInstanceOf<PeopleController>(controller);
         }
 
         [Test]
@@ -43,8 +44,8 @@
             var result = controller.Get() as OkNegotiatedContentResult<List<Person>>;
 
             // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(people.Count, result.Content.Count);
+            IsNotNull(result);
+            AreEqual(people.Count, result.Content.Count);
         }
 
         [Test]
@@ -58,7 +59,7 @@
             var result = controller.Get() as NotFoundResult;
 
             // Assert
-            Assert.IsNotNull(result);
+            IsNotNull(result);
         }
 
         [Test]
@@ -76,10 +77,10 @@
             var result = controller.Get(id) as OkNegotiatedContentResult<Person>;
 
             // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(id, result.Content.Id);
-            Assert.AreEqual(name, result.Content.Name);
-            Assert.AreEqual(age, result.Content.Age);
+            IsNotNull(result);
+            AreEqual(id, result.Content.Id);
+            AreEqual(name, result.Content.Name);
+            AreEqual(age, result.Content.Age);
         }
 
         [Test]
@@ -93,7 +94,7 @@
             var result = controller.Get(id) as NotFoundResult;
 
             // Assert
-            Assert.IsNotNull(result);
+            IsNotNull(result);
         }
 
         [Test]
@@ -107,7 +108,7 @@
             var result = controller.Get(id) as BadRequestErrorMessageResult;
 
             // Assert
-            Assert.IsNotNull(result);
+            IsNotNull(result);
         }
 
         [Test]
@@ -131,11 +132,11 @@
             var result = controller.Post(person) as CreatedNegotiatedContentResult<Person>;
 
             // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual("http://localhost:3001/api/people/1", result.Location.ToString());
-            Assert.AreEqual(id, result.Content.Id);
-            Assert.AreEqual(name, result.Content.Name);
-            Assert.AreEqual(age, result.Content.Age);
+            IsNotNull(result);
+            AreEqual("http://localhost:3001/api/people/1", result.Location.ToString());
+            AreEqual(id, result.Content.Id);
+            AreEqual(name, result.Content.Name);
+            AreEqual(age, result.Content.Age);
         }
 
         [Test]
@@ -148,7 +149,7 @@
             var result = controller.Post(null) as BadRequestResult;
 
             // Assert
-            Assert.IsNotNull(result);
+            IsNotNull(result);
         }
 
         [Test]
@@ -167,10 +168,10 @@
             var result = controller.Put(id, person) as OkNegotiatedContentResult<Person>;
 
             // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(id, result.Content.Id);
-            Assert.AreEqual(name, result.Content.Name);
-            Assert.AreEqual(age, result.Content.Age);
+            IsNotNull(result);
+            AreEqual(id, result.Content.Id);
+            AreEqual(name, result.Content.Name);
+            AreEqual(age, result.Content.Age);
             _personService.Verify(m => m.GetPerson(It.IsAny<int>()), Times.Once());
             _personService.Verify(m => m.Update(It.IsAny<Person>()), Times.Once());
         }
@@ -186,7 +187,7 @@
             var result = controller.Put(0, null) as BadRequestResult;
 
             // Assert
-            Assert.IsNotNull(result);
+            IsNotNull(result);
             _personService.Verify(m => m.Update(It.IsAny<Person>()), Times.Never());
         }
 
@@ -207,7 +208,7 @@
             var result = controller.Put(invalidId, person) as NotFoundResult;
 
             // Assert
-            Assert.IsNotNull(result);
+            IsNotNull(result);
             _personService.Verify(m => m.GetPerson(It.Is<int>(s => s == invalidId)), Times.Once());
             _personService.Verify(m => m.Update(It.IsAny<Person>()), Times.Never());
         }
@@ -226,7 +227,7 @@
             var result = controller.Delete(id) as OkResult;
 
             // Assert
-            Assert.IsNotNull(result);
+            IsNotNull(result);
             _personService.Verify(m => m.GetPerson(It.IsAny<int>()), Times.Once());
             _personService.Verify(m => m.Delete(It.IsAny<Person>()), Times.Once());
         }
@@ -241,8 +242,8 @@
             var result = controller.Delete(-5) as BadRequestErrorMessageResult;
 
             // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual("id is not valid.", result.Message);
+            IsNotNull(result);
+            AreEqual("id is not valid.", result.Message);
         }
 
         [Test]
@@ -257,7 +258,7 @@
             var result = controller.Delete(invalidId) as NotFoundResult;
 
             // Assert
-            Assert.IsNotNull(result);
+            IsNotNull(result);
             _personService.Verify(m => m.GetPerson(It.Is<int>(s => s == invalidId)), Times.Once());
             _personService.Verify(m => m.Delete(It.IsAny<Person>()), Times.Never());
         }

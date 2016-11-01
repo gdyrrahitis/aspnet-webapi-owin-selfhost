@@ -8,6 +8,7 @@
     using Moq;
     using NUnit.Framework;
     using SelfHostedApi.Controllers;
+    using static NUnit.Framework.Assert;
 
     [TestFixture]
     public class UserControllerTests
@@ -49,10 +50,10 @@
             var result = controller.Get() as OkNegotiatedContentResult<IdentityUser>;
 
             // Assert
-            Assert.IsNotNull(result);
-            Assert.IsNotNull(result.Content);
-            Assert.AreEqual(username, result.Content.UserName);
-            Assert.AreEqual(hash, result.Content.PasswordHash);
+            IsNotNull(result);
+            IsNotNull(result.Content);
+            AreEqual(username, result.Content.UserName);
+            AreEqual(hash, result.Content.PasswordHash);
         }
 
         [Test]
@@ -74,7 +75,7 @@
             var result = controller.Get() as InternalServerErrorResult;
 
             // Assert
-            Assert.IsNotNull(result);
+            IsNotNull(result);
         }
     }
 }

@@ -7,6 +7,7 @@
     using Common;
     using NUnit.Framework;
     using SelfHostedApi.Controllers;
+    using static NUnit.Framework.Assert;
 
     [TestFixture]
     public class PeopleControllerActionSelectionTests
@@ -37,8 +38,8 @@
             var actionDescriptor = actionSelector.SelectAction(context);
 
             // Assert
-            Assert.AreEqual(controller, controllerDescriptor.ControllerType);
-            Assert.AreEqual(action, actionDescriptor.ActionName);
+            AreEqual(controller, controllerDescriptor.ControllerType);
+            AreEqual(action, actionDescriptor.ActionName);
         }
     }
 }
