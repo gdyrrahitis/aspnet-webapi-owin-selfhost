@@ -17,10 +17,8 @@
         public IHttpActionResult Get()
         {
             var people = _service.GetPeople().ToList();
-            if (people.Any())
-                return Ok(people);
-
-            return NotFound();
+            return people.Any() ? (IHttpActionResult)Ok(people) : 
+                NotFound();
         }
 
         public IHttpActionResult Get(int id)
@@ -28,10 +26,8 @@
             if (id < 0) return BadRequest($"{nameof(id)} is not valid.");
 
             var person = _service.GetPerson(id);
-            if (person == null)
-                return NotFound();
-
-            return Ok(person);
+            return person == null ? (IHttpActionResult)NotFound() : 
+                Ok(person);
         }
 
         public IHttpActionResult Put(int id, Person person)
@@ -40,14 +36,22 @@
                 return BadRequest();
 
             var persistedEntity = _service.GetPerson(id);
-            if (persistedEntity == null)
-                return NotFound();
+            return persistedEntity == null ? NotFound() :
+                UpdateAndReturnOkNegotiatedContentResult(person, persistedEntity);
+        }
 
+        private IHttpActionResult UpdateAndReturnOkNegotiatedContentResult(Person person, Person persistedEntity)
+        {
+            UpdatePersistedEntity(person, persistedEntity);
+            return Ok(persistedEntity);
+        }
+
+        private void UpdatePersistedEntity(Person person, Person persistedEntity)
+        {
             persistedEntity.Name = person.Name;
             persistedEntity.Age = person.Age;
 
             _service.Update(persistedEntity);
-            return Ok(persistedEntity);
         }
 
         public IHttpActionResult Post(Person person)
@@ -65,9 +69,12 @@
                 return BadRequest($"{nameof(id)} is not valid.");
 
             var person = _service.GetPerson(id);
-            if (person == null)
-                return NotFound();
+            return person == null ? NotFound() : 
+                DeletePersonAndReturnOkResult(person);
+        }
 
+        private IHttpActionResult DeletePersonAndReturnOkResult(Person person)
+        {
             _service.Delete(person);
             return Ok();
         }
