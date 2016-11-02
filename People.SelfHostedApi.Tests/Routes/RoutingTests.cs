@@ -8,6 +8,7 @@
     [TestFixture]
     public class RoutingTests
     {
+        [Test]
         [TestCase("http://localhost:3001/invalid/route", "GET", false, null, null)]
         [TestCase("http://localhost:3001/api/people/", "GET", true, "people", null)]
         [TestCase("http://localhost:3001/api/people/", "POST", true, "people", null)]
