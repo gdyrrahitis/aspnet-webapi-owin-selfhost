@@ -1,6 +1,7 @@
 ﻿namespace People.SelfHostedApi.Tests.ActionSelection.UserController
 {
     using System;
+    using System.Net.Http;
     using System.Web.Http;
     using System.Web.Http.Controllers;
     using System.Web.Http.Routing;
@@ -8,6 +9,7 @@
     using NUnit.Framework;
     using SelfHostedApi.Controllers;
     using static NUnit.Framework.Assert;
+    using static Common.CommonMethods;
 
     [TestFixture]
     public class UserControllerActionSelectionTests
@@ -17,13 +19,14 @@
         public void CorrectControllerAndActionAreSelected_Test(string url, string method, Type controller, string action)
         {
             // Arrange
-            IHttpRouteData routeData;
             var config = new HttpConfiguration();
             WebApiRouteConfig.Register(config);
             config.EnsureInitialized();
             var actionSelector = config.Services.GetActionSelector();
             var controllerSelector = config.Services.GetHttpControllerSelector();
-            var request = CommonMethods.SetupRequest(url, method, config, out routeData);
+            var request = SetupHttpRequestMessageRequest(url, method);
+            var routeData = SetupRouteData(request, config);
+            SetupRequestProperties(request, routeData, config);
 
             // Act
             var controllerDescriptor = controllerSelector.SelectController(request);

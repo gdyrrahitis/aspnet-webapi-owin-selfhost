@@ -7,13 +7,34 @@
 
     public class CommonMethods
     {
-        public static HttpRequestMessage SetupRequest(string url, string method, HttpConfiguration config, out IHttpRouteData routeData)
+        public static HttpRequestMessage SetupHttpRequestMessageRequest(string url, string method)
         {
-            var request = new HttpRequestMessage(new HttpMethod(method), url);
-            routeData = config.Routes.GetRouteData(request);
+            return new HttpRequestMessage(new HttpMethod(method), url);
+        }
+
+        public static IHttpRouteData SetupRouteData(HttpRequestMessage request,
+            HttpConfiguration config)
+        {
+            return config.Routes.GetRouteData(request);
+        }
+
+        public static void SetupRequestProperties(HttpRequestMessage request, IHttpRouteData routeData, 
+            HttpConfiguration config)
+        {
+            SetupRequestRouteDataKeyProperty(request, routeData);
+            SetupRequestHttpConfigurationKeyProperty(request, config);
+        }
+
+        public static void SetupRequestRouteDataKeyProperty(HttpRequestMessage request,
+            IHttpRouteData routeData)
+        {
             request.Properties[HttpPropertyKeys.HttpRouteDataKey] = routeData;
+        }
+
+        public static void SetupRequestHttpConfigurationKeyProperty(HttpRequestMessage request,
+            HttpConfiguration config)
+        {
             request.Properties[HttpPropertyKeys.HttpConfigurationKey] = config;
-            return request;
         }
     }
 }
