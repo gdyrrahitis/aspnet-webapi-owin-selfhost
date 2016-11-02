@@ -41,7 +41,7 @@
             return config;
         }
 
-        private static HttpRequestMessage SetupHttpRequestMessage(string url, string method)
+        private HttpRequestMessage SetupHttpRequestMessage(string url, string method)
         {
             var httpMethod = new HttpMethod(method);
             return new HttpRequestMessage(httpMethod, url);
