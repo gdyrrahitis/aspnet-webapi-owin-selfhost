@@ -48,6 +48,16 @@
             AreEqual(people.Count, result.Content.Count);
         }
 
+        private List<Person> CreatePeopleList()
+        {
+            var people = new List<Person>
+            {
+                new Person(),
+                new Person()
+            };
+            return people;
+        }
+
         [Test]
         public void PeopleController_Get_PeopleFromService_ListIsEmpty_NotFoundResultIsReturned_Test()
         {
@@ -81,6 +91,17 @@
             AreEqual(id, result.Content.Id);
             AreEqual(name, result.Content.Name);
             AreEqual(age, result.Content.Age);
+        }
+
+        private Person CreatePersonObject(int id, string name, int age)
+        {
+            var person = new Person
+            {
+                Id = id,
+                Name = name,
+                Age = age
+            };
+            return person;
         }
 
         [Test]
@@ -261,27 +282,6 @@
             IsNotNull(result);
             _personService.Verify(m => m.GetPerson(It.Is<int>(s => s == invalidId)), Times.Once());
             _personService.Verify(m => m.Delete(It.IsAny<Person>()), Times.Never());
-        }
-
-        private static List<Person> CreatePeopleList()
-        {
-            var people = new List<Person>
-            {
-                new Person(),
-                new Person()
-            };
-            return people;
-        }
-
-        private static Person CreatePersonObject(int id, string name, int age)
-        {
-            var person = new Person
-            {
-                Id = id,
-                Name = name,
-                Age = age
-            };
-            return person;
         }
     }
 }

@@ -18,8 +18,8 @@
         public void DefaultRoute_Returns_Correct_RouteData_Test(string url, string method, bool exists, string controller, string id)
         {
             // Arrange
-            HttpRequestMessage request;
-            var config = SetupRequest(url, method, out request);
+            var config = SetupHttpConfiguration();
+            var request = SetupHttpRequestMessage(url, method);
 
             // Act
             var routeData = config.Routes.GetRouteData(request);
@@ -33,14 +33,18 @@
             }
         }
 
-        private static HttpConfiguration SetupRequest(string url, string method, out HttpRequestMessage request)
+        private HttpConfiguration SetupHttpConfiguration()
         {
             var config = new HttpConfiguration();
             WebApiRouteConfig.Register(config);
             config.EnsureInitialized();
-            var httpMethod = new HttpMethod(method);
-            request = new HttpRequestMessage(httpMethod, url);
             return config;
+        }
+
+        private static HttpRequestMessage SetupHttpRequestMessage(string url, string method)
+        {
+            var httpMethod = new HttpMethod(method);
+            return new HttpRequestMessage(httpMethod, url);
         }
     }
 }
