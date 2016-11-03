@@ -17,6 +17,7 @@
         private const int Id = 1;
         private const string Name = "George";
         private const int Age = 26;
+        private const string BaseUri = "http://localhost:3001/api/people";
         private Mock<IPersonService> _personService;
 
         [SetUp]
@@ -137,7 +138,7 @@
             var person = CreateDefaultPersonObject();
             var request = new HttpRequestMessage
             {
-                RequestUri = new System.Uri("http://localhost:3001/api/people")
+                RequestUri = new System.Uri(BaseUri)
             };
             var controller = new PeopleController(_personService.Object)
             {
@@ -149,7 +150,7 @@
 
             // Assert
             IsNotNull(result);
-            AreEqual("http://localhost:3001/api/people/1", result.Location.ToString());
+            AreEqual($"{BaseUri}/1", result.Location.ToString());
             AreEqual(Id, result.Content.Id);
             AreEqual(Name, result.Content.Name);
             AreEqual(Age, result.Content.Age);
