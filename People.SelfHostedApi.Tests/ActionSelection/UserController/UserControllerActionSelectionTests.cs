@@ -6,7 +6,7 @@
     using NUnit.Framework;
     using SelfHostedApi.Controllers;
     using static NUnit.Framework.Assert;
-    using static Common.HttpRequestMessageCommons;
+    using static Tests.Common.HttpRequestMessageCommons;
     using static Common.HttpRouteDataCommons;
 
     [TestFixture]
@@ -20,7 +20,7 @@
             var config = SetupHttpConfiguration();
             var actionSelector = config.Services.GetActionSelector();
             var controllerSelector = config.Services.GetHttpControllerSelector();
-            var request = SetupHttpRequestMessageRequest(url, method);
+            var request = SetupHttpRequestMessage(url, method);
             var routeData = SetupRouteData(request, config);
             SetupRequestProperties(request, routeData, config);
 

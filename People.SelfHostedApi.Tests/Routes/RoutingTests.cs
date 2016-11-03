@@ -1,9 +1,10 @@
 ﻿namespace People.SelfHostedApi.Tests.Routes
 {
-    using System.Net.Http;
     using System.Web.Http;
     using NUnit.Framework;
     using static NUnit.Framework.Assert;
+    using static Common.HttpConfigurationCommons;
+    using static Common.HttpRequestMessageCommons;
 
     [TestFixture]
     public class RoutingTests
@@ -32,20 +33,6 @@
                 AreEqual(controller, routeData.Values["controller"]);
                 AreEqual(id ?? (object)RouteParameter.Optional, routeData.Values["id"]);
             }
-        }
-
-        private HttpConfiguration SetupHttpConfiguration()
-        {
-            var config = new HttpConfiguration();
-            WebApiRouteConfig.Register(config);
-            config.EnsureInitialized();
-            return config;
-        }
-
-        private HttpRequestMessage SetupHttpRequestMessage(string url, string method)
-        {
-            var httpMethod = new HttpMethod(method);
-            return new HttpRequestMessage(httpMethod, url);
         }
     }
 }

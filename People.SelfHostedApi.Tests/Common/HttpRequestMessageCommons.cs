@@ -1,4 +1,4 @@
-﻿namespace People.SelfHostedApi.Tests.ActionSelection.Common
+﻿namespace People.SelfHostedApi.Tests.Common
 {
     using System.Net.Http;
     using System.Web.Http;
@@ -7,7 +7,7 @@
 
     public class HttpRequestMessageCommons
     {
-        public static HttpRequestMessage SetupHttpRequestMessageRequest(string url, string method)
+        public static HttpRequestMessage SetupHttpRequestMessage(string url, string method)
         {
             return new HttpRequestMessage(new HttpMethod(method), url);
         }

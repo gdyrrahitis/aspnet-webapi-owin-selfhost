@@ -1,4 +1,4 @@
-﻿namespace People.SelfHostedApi.Tests.ActionSelection.Common
+﻿namespace People.SelfHostedApi.Tests.Common
 {
     using System.Web.Http;
 
