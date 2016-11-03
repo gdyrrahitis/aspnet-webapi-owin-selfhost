@@ -9,7 +9,8 @@
     {
         public static HttpRequestMessage SetupHttpRequestMessage(string url, string method)
         {
-            return new HttpRequestMessage(new HttpMethod(method), url);
+            var httpMethod = new HttpMethod(method);
+            return new HttpRequestMessage(httpMethod, url);
         }
 
         public static void SetupRequestProperties(HttpRequestMessage request, IHttpRouteData routeData, 
