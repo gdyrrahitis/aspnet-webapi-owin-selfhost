@@ -1,15 +1,13 @@
 ﻿namespace People.SelfHostedApi.Tests.ActionSelection.UserController
 {
     using System;
-    using System.Net.Http;
     using System.Web.Http;
     using System.Web.Http.Controllers;
-    using System.Web.Http.Routing;
-    using Common;
     using NUnit.Framework;
     using SelfHostedApi.Controllers;
     using static NUnit.Framework.Assert;
-    using static Common.CommonMethods;
+    using static Common.HttpRequestMessageCommons;
+    using static Common.HttpRouteDataCommons;
 
     [TestFixture]
     public class UserControllerActionSelectionTests

@@ -5,17 +5,11 @@
     using System.Web.Http.Hosting;
     using System.Web.Http.Routing;
 
-    public class CommonMethods
+    public class HttpRequestMessageCommons
     {
         public static HttpRequestMessage SetupHttpRequestMessageRequest(string url, string method)
         {
             return new HttpRequestMessage(new HttpMethod(method), url);
-        }
-
-        public static IHttpRouteData SetupRouteData(HttpRequestMessage request,
-            HttpConfiguration config)
-        {
-            return config.Routes.GetRouteData(request);
         }
 
         public static void SetupRequestProperties(HttpRequestMessage request, IHttpRouteData routeData, 

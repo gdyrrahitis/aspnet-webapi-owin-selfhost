@@ -5,11 +5,12 @@
     using System.Web.Http;
     using System.Web.Http.Controllers;
     using System.Web.Http.Routing;
-    using Common;
     using NUnit.Framework;
     using SelfHostedApi.Controllers;
     using static NUnit.Framework.Assert;
-    using static Common.CommonMethods;
+    using static Common.HttpConfigurationCommons;
+    using static Common.HttpRequestMessageCommons;
+    using static Common.HttpRouteDataCommons;
 
     [TestFixture]
     public class PeopleControllerActionSelectionTests
@@ -48,14 +49,6 @@
                 ControllerDescriptor = controllerDescriptor
             };
             return context;
-        }
-
-        private static HttpConfiguration SetupHttpConfiguration()
-        {
-            var config = new HttpConfiguration();
-            WebApiRouteConfig.Register(config);
-            config.EnsureInitialized();
-            return config;
         }
     }
 }
