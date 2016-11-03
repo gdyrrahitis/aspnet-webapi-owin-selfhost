@@ -27,9 +27,11 @@
         {
             // Arrange
             var type = typeof(Repository<object, string>);
+
+            // Act
             var instance = new Repository<object, string>(_dbContextMock.Object);
 
-            // Act | Assert
+            // Assert
             IsInstanceOf(type, instance);
         }
 
@@ -68,7 +70,7 @@
             return dbSetMock;
         }
 
-        private static void SetupIQueryable(Mock<IDbSet<EntityStub>> dbSetMock, IQueryable<EntityStub> entityStubs)
+        private static void SetupIQueryable(Mock<IDbSet<EntityStub>> dbSetMock, IQueryable entityStubs)
         {
             dbSetMock.Setup(s => s.Provider).Returns(entityStubs.Provider);
             dbSetMock.Setup(s => s.Expression).Returns(entityStubs.Expression);
@@ -102,29 +104,43 @@
         {
             // Arrange
             const string key = "123";
-            const string nonExistentKey = "1234";
             var entityStub = new EntityStub();
             var dbSetMock = GetDbSetMock();
             dbSetMock.Setup(m => m.Find(It.Is<string>(s => s == key))).Returns(entityStub);
+            _dbContextMock.Setup(s => s.GetDbSet<EntityStub>()).Returns(() => dbSetMock.Object);
+            var repository = CreateRepository();
+
+            // Act
+            var result = repository.Find(key);
+
+            // Assert
+            IsNotNull(result);
+            IsInstanceOf<EntityStub>(result);
+        }
+
+        [Test]
+        public void Find_ForNonExistentGivenKey_ReturnsAnNull_Test()
+        {
+            // Arrange
+            const string nonExistentKey = "1234";
+            var dbSetMock = GetDbSetMock();
             dbSetMock.Setup(m => m.Find(It.Is<string>(s => s == nonExistentKey))).Returns(() => null);
             _dbContextMock.Setup(s => s.GetDbSet<EntityStub>()).Returns(() => dbSetMock.Object);
             var repository = CreateRepository();
 
             // Act
             var nullResult = repository.Find(nonExistentKey);
-            var result = repository.Find(key);
 
             // Assert
             IsNull(nullResult);
-            IsNotNull(result);
-            IsInstanceOf<EntityStub>(result);
         }
 
         [Test]
         public void Update_EntryWasCalledOnceForModifying_SaveChangesWasCalledOnce_Test()
         {
             // Arrange
-            _dbContextMock.Setup(m => m.Entry(It.IsAny<EntityStub>(), It.IsAny<Action<DbEntityEntry<EntityStub>>>())).Verifiable();
+            _dbContextMock.Setup(m => m.Entry(It.IsAny<EntityStub>(), 
+                It.IsAny<Action<DbEntityEntry<EntityStub>>>())).Verifiable();
             _dbContextMock.Setup(m => m.SaveChanges()).Verifiable();
             var repository = CreateRepository();
 
@@ -132,7 +148,8 @@
             repository.Update(new EntityStub());
 
             // Assert
-            _dbContextMock.Verify(m => m.Entry(It.IsAny<EntityStub>(), It.IsAny<Action<DbEntityEntry<EntityStub>>>()), Times.Once());
+            _dbContextMock.Verify(m => m.Entry(It.IsAny<EntityStub>(), 
+                It.IsAny<Action<DbEntityEntry<EntityStub>>>()), Times.Once());
             _dbContextMock.Verify(m => m.SaveChanges(), Times.Once());
         }
 
@@ -140,7 +157,8 @@
         public void Delete_EntryWasCalledOnce_SaveChangesWasCalledOnce_Test()
         {
             // Arrange
-            _dbContextMock.Setup(m => m.Entry(It.IsAny<EntityStub>(), It.IsAny<Action<DbEntityEntry<EntityStub>>>())).Verifiable();
+            _dbContextMock.Setup(m => m.Entry(It.IsAny<EntityStub>(), 
+                It.IsAny<Action<DbEntityEntry<EntityStub>>>())).Verifiable();
             _dbContextMock.Setup(m => m.SaveChanges()).Verifiable();
             var repository = CreateRepository();
 
@@ -148,7 +166,8 @@
             repository.Delete(new EntityStub());
 
             // Assert
-            _dbContextMock.Verify(m => m.Entry(It.IsAny<EntityStub>(), It.IsAny<Action<DbEntityEntry<EntityStub>>>()), Times.Once());
+            _dbContextMock.Verify(m => m.Entry(It.IsAny<EntityStub>(), 
+                It.IsAny<Action<DbEntityEntry<EntityStub>>>()), Times.Once());
             _dbContextMock.Verify(m => m.SaveChanges(), Times.Once());
         }
 
@@ -156,7 +175,8 @@
         public void Create_EntryWasCalledOnce_SaveChangesWasCalledOnce_Test()
         {
             // Arrange
-            _dbContextMock.Setup(m => m.Entry(It.IsAny<EntityStub>(), It.IsAny<Action<DbEntityEntry<EntityStub>>>())).Verifiable();
+            _dbContextMock.Setup(m => m.Entry(It.IsAny<EntityStub>(), 
+                It.IsAny<Action<DbEntityEntry<EntityStub>>>())).Verifiable();
             _dbContextMock.Setup(m => m.SaveChanges()).Verifiable();
             var repository = CreateRepository();
 
@@ -164,7 +184,8 @@
             repository.Create(new EntityStub());
 
             // Assert
-            _dbContextMock.Verify(m => m.Entry(It.IsAny<EntityStub>(), It.IsAny<Action<DbEntityEntry<EntityStub>>>()), Times.Once());
+            _dbContextMock.Verify(m => m.Entry(It.IsAny<EntityStub>(), 
+                It.IsAny<Action<DbEntityEntry<EntityStub>>>()), Times.Once());
             _dbContextMock.Verify(m => m.SaveChanges(), Times.Once());
         }
 
