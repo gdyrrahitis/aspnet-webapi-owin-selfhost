@@ -12,6 +12,9 @@
     [TestFixture]
     public class PersonServiceTests
     {
+        private const int Id = 1;
+        private const string Name = "George";
+        private const int Age = 26;
         private Mock<IRepository<Person, int>> _repositoryMock;
 
         [SetUp]
@@ -44,11 +47,7 @@
         public void GetAllPeople_ReturnsListOfPeopleEntities_Test()
         {
             // Arrange
-            var people = new List<Person>
-            {
-                new Person(),
-                new Person()
-            };
+            var people = GetListOfPeople();
             _repositoryMock.Setup(p => p.All).Returns(() => people.AsQueryable());
             var service = new PersonService(_repositoryMock.Object);
 
@@ -60,50 +59,55 @@
             AreEqual(people.Count, result.Count());
         }
 
+        private static List<Person> GetListOfPeople()
+        {
+            var people = new List<Person>
+            {
+                new Person(),
+                new Person()
+            };
+            return people;
+        }
+
         [Test]
         public void GetPerson_ReturnsPersonEntity_Test()
         {
             // Arrange
             const int invalidId = 5;
-            const int id = 4;
-            const string name = "George";
-            const int age = 26;
-            var person = new Person
-            {
-                Id = id,
-                Name = name,
-                Age = age
-            };
-            _repositoryMock.Setup(m => m.Find(It.Is<int>(i => i == id))).Returns(person);
+            var person = CreateDefaultPersonObject();
+            _repositoryMock.Setup(m => m.Find(It.Is<int>(i => i == Id))).Returns(person);
             _repositoryMock.Setup(m => m.Find(It.Is<int>(i => i == invalidId))).Returns(() => null);
             var service = new PersonService(_repositoryMock.Object);
 
             // Act
-            var result = service.GetPerson(id);
+            var result = service.GetPerson(Id);
             var invalidResult = service.GetPerson(invalidId);
 
             // Assert
             IsNotNull(result);
             IsNull(invalidResult);
             IsInstanceOf<Person>(result);
-            AreEqual(id, result.Id);
-            AreEqual(name, result.Name);
-            AreEqual(age, result.Age);
+            AreEqual(Id, result.Id);
+            AreEqual(Name, result.Name);
+            AreEqual(Age, result.Age);
+        }
+
+        private static Person CreateDefaultPersonObject()
+        {
+            var person = new Person
+            {
+                Id = Id,
+                Name = Name,
+                Age = Age
+            };
+            return person;
         }
 
         [Test]
         public void Update_ShouldCallRepositoryUpdateOnce_Test()
         {
             // Arrange
-            const int id = 4;
-            const string name = "George";
-            const int age = 26;
-            var person = new Person
-            {
-                Id = id,
-                Name = name,
-                Age = age
-            };
+            var person = CreateDefaultPersonObject();
             var invalidPerson = new Person();
             _repositoryMock.Setup(m => m.Update(It.Is<Person>(p => p == person)))
                 .Verifiable();
@@ -121,17 +125,9 @@
         public void Delete_ShouldCallRepositoryDeleteOnce_Test()
         {
             // Arrange
-            const int id = 4;
-            const string name = "George";
-            const int age = 26;
-            var person = new Person
-            {
-                Id = id,
-                Name = name,
-                Age = age
-            };
+            var person = CreateDefaultPersonObject();
             var invalidPerson = new Person();
-            _repositoryMock.Setup(m => m.Find(It.Is<int>(s => s == 4))).Returns(person);
+            _repositoryMock.Setup(m => m.Find(It.Is<int>(s => s == 1))).Returns(person);
             _repositoryMock.Setup(m => m.Delete(It.Is<Person>(p => p == person)))
                 .Verifiable();
             var service = new PersonService(_repositoryMock.Object);
@@ -147,15 +143,7 @@
         [Test]
         public void Create_ShouldCallRepositoryCreateOnce_Test() {
             // Arrange
-            const int id = 4;
-            const string name = "George";
-            const int age = 26;
-            var person = new Person
-            {
-                Id = id,
-                Name = name,
-                Age = age
-            };
+            var person = CreateDefaultPersonObject();
             var invalidPerson = new Person();
             _repositoryMock.Setup(m => m.Create(It.Is<Person>(p => p == person)))
                 .Verifiable();
