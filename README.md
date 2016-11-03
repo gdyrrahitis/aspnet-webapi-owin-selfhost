@@ -2,8 +2,10 @@
 An ASP.NET Web API 2 OWIN self-hosted application, with standard and secure `ApiController`'s.
 
 # Code
+Much of this code is explained on following blog posts, [tour architecture](https://georgedyrra.wordpress.com/2016/11/03/unit-testing-and-code-coverage-for-asp-net-web-api-12/) as well as [tour on unit tests and code coverage](https://georgedyrra.wordpress.com/2016/11/03/unit-testing-and-code-coverage-for-asp-net-web-api-22/).
 Download or clone the repository in your local machine.
-Solution has been developed in Visual Studio 2015.
+
+*Solution has been developed in Visual Studio 2015.*
 
 ## Api
 The ASP.NET Web API application. It consumes the underlying services, People.Services, to communicate with the underlying data store.
@@ -20,6 +22,10 @@ Contains all unit tests for the application. Tests are grouped per project, so t
 - *People.SelfHosted.Api*
 
 Used NUnit 3 framework for unit tests.
+
+## Code coverage
+For code coverage OpenCover is used.
+To run the code coverage reports, navigate to `/bin/Debug` folder of each test project and open the `_RunCodeCoverageInOutput.bat`. This will kick off the OpenCover tool to start making coverage reports in XML format.
 
 # License
 Apache License Version 2.0
