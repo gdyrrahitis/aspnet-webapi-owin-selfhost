@@ -28,15 +28,9 @@
         {
             // Arrange
             const string username = "user";
-            const string password = "123";
-            var hash = new PasswordHasher().HashPassword(password);
+            var hash = CreateHashedPassword();
             var user = new IdentityUser(username) { PasswordHash = hash };
-
-            var claim = new Claim(ClaimTypes.NameIdentifier, "myId123");
-            var mockIdentity = new Mock<ClaimsIdentity>();
-            mockIdentity.Setup(m => m.FindFirst(It.Is<string>(c => c == ClaimTypes.NameIdentifier)))
-                .Returns(claim);
-            _userPrincipalMock.Setup(m => m.Identity).Returns(mockIdentity.Object);
+            SetupClaimAndClaimIdentityToMockUserPrincipal();
 
             _userStoreMock.Setup(m => m.FindByIdAsync(It.IsAny<string>())).ReturnsAsync(user);
             var applicationUserManager = new ApplicationUserManager(_userStoreMock.Object);
@@ -54,6 +48,22 @@
             IsNotNull(result.Content);
             AreEqual(username, result.Content.UserName);
             AreEqual(hash, result.Content.PasswordHash);
+        }
+
+        private static string CreateHashedPassword()
+        {
+            const string password = "123";
+            var hash = new PasswordHasher().HashPassword(password);
+            return hash;
+        }
+
+        private void SetupClaimAndClaimIdentityToMockUserPrincipal()
+        {
+            var claim = new Claim(ClaimTypes.NameIdentifier, "myId123");
+            var mockIdentity = new Mock<ClaimsIdentity>();
+            mockIdentity.Setup(m => m.FindFirst(It.Is<string>(c => c == ClaimTypes.NameIdentifier)))
+                .Returns(claim);
+            _userPrincipalMock.Setup(m => m.Identity).Returns(mockIdentity.Object);
         }
 
         [Test]

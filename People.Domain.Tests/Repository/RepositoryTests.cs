@@ -121,7 +121,7 @@
         }
 
         [Test]
-        public void Update_EntryWasCalledTwiceForDetachingAndModifying_SaveChangesWasCalledOnce_Test()
+        public void Update_EntryWasCalledOnceForModifying_SaveChangesWasCalledOnce_Test()
         {
             // Arrange
             _dbContextMock.Setup(m => m.Entry(It.IsAny<EntityStub>(), It.IsAny<Action<DbEntityEntry<EntityStub>>>())).Verifiable();

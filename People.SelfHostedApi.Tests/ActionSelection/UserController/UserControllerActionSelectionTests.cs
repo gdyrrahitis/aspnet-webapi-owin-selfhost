@@ -19,9 +19,7 @@
         public void CorrectControllerAndActionAreSelected_Test(string url, string method, Type controller, string action)
         {
             // Arrange
-            var config = new HttpConfiguration();
-            WebApiRouteConfig.Register(config);
-            config.EnsureInitialized();
+            var config = SetupHttpConfiguration();
             var actionSelector = config.Services.GetActionSelector();
             var controllerSelector = config.Services.GetHttpControllerSelector();
             var request = SetupHttpRequestMessageRequest(url, method);
@@ -39,6 +37,14 @@
             // Assert
             AreEqual(controller, controllerDescriptor.ControllerType);
             AreEqual(action, actionDescriptor.ActionName);
+        }
+
+        private static HttpConfiguration SetupHttpConfiguration()
+        {
+            var config = new HttpConfiguration();
+            WebApiRouteConfig.Register(config);
+            config.EnsureInitialized();
+            return config;
         }
     }
 }

@@ -14,6 +14,9 @@
     [TestFixture]
     public class PeopleControllerTests
     {
+        private const int Id = 1;
+        private const string Name = "George";
+        private const int Age = 26;
         private Mock<IPersonService> _personService;
 
         [SetUp]
@@ -76,43 +79,38 @@
         public void PeopleController_Get_PersonByIdFromService_ReturnsOkWithPersonEntityAsContent_Test()
         {
             // Arrange
-            const int id = 1;
-            const string name = "George";
-            const int age = 26;
-            var person = CreatePersonObject(id, name, age);
+            var person = CreateDefaultPersonObject();
             _personService.Setup(m => m.GetPerson(It.IsAny<int>())).Returns(person);
             var controller = new PeopleController(_personService.Object);
 
             // Act
-            var result = controller.Get(id) as OkNegotiatedContentResult<Person>;
+            var result = controller.Get(Id) as OkNegotiatedContentResult<Person>;
 
             // Assert
             IsNotNull(result);
-            AreEqual(id, result.Content.Id);
-            AreEqual(name, result.Content.Name);
-            AreEqual(age, result.Content.Age);
+            AreEqual(Id, result.Content.Id);
+            AreEqual(Name, result.Content.Name);
+            AreEqual(Age, result.Content.Age);
         }
 
-        private Person CreatePersonObject(int id, string name, int age)
+        private Person CreateDefaultPersonObject()
         {
-            var person = new Person
+            return new Person
             {
-                Id = id,
-                Name = name,
-                Age = age
+                Id = Id,
+                Name = Name,
+                Age = Age
             };
-            return person;
         }
 
         [Test]
         public void PeopleController_Get_PersonByIdFromService_PersonCouldNotBeFound_ReturnsNotFoundResult_Test()
         {
             // Arrange
-            const int id = 1;
             var controller = new PeopleController(_personService.Object);
 
             // Act
-            var result = controller.Get(id) as NotFoundResult;
+            var result = controller.Get(Id) as NotFoundResult;
 
             // Assert
             IsNotNull(result);
@@ -136,10 +134,7 @@
         public void PeopleController_Post_PersonToService_ReturnsCreatedResult_Test()
         {
             // Arrange
-            const int id = 1;
-            const string name = "George";
-            const int age = 26;
-            var person = CreatePersonObject(id, name, age);
+            var person = CreateDefaultPersonObject();
             var request = new HttpRequestMessage
             {
                 RequestUri = new System.Uri("http://localhost:3001/api/people")
@@ -155,9 +150,9 @@
             // Assert
             IsNotNull(result);
             AreEqual("http://localhost:3001/api/people/1", result.Location.ToString());
-            AreEqual(id, result.Content.Id);
-            AreEqual(name, result.Content.Name);
-            AreEqual(age, result.Content.Age);
+            AreEqual(Id, result.Content.Id);
+            AreEqual(Name, result.Content.Name);
+            AreEqual(Age, result.Content.Age);
         }
 
         [Test]
@@ -177,22 +172,19 @@
         public void PeopleController_Put_PersonUpdated_ReturnsOkResultWithContent_Test()
         {
             // Arrange
-            const int id = 1;
-            const string name = "George";
-            const int age = 26;
-            var person = CreatePersonObject(id, name, age);
+            var person = CreateDefaultPersonObject();
             _personService.Setup(m => m.GetPerson(It.IsAny<int>())).Returns(person);
             _personService.Setup(m => m.Update(It.IsAny<Person>())).Verifiable();
             var controller = new PeopleController(_personService.Object);
 
             // Act
-            var result = controller.Put(id, person) as OkNegotiatedContentResult<Person>;
+            var result = controller.Put(Id, person) as OkNegotiatedContentResult<Person>;
 
             // Assert
             IsNotNull(result);
-            AreEqual(id, result.Content.Id);
-            AreEqual(name, result.Content.Name);
-            AreEqual(age, result.Content.Age);
+            AreEqual(Id, result.Content.Id);
+            AreEqual(Name, result.Content.Name);
+            AreEqual(Age, result.Content.Age);
             _personService.Verify(m => m.GetPerson(It.IsAny<int>()), Times.Once());
             _personService.Verify(m => m.Update(It.IsAny<Person>()), Times.Once());
         }
@@ -216,11 +208,8 @@
         public void PeopleController_Put_PersonCouldNotBeFound_ReturnsNotFoundResult_Test()
         {
             // Arrange
-            const int id = 1;
             const int invalidId = 2;
-            const string name = "George";
-            const int age = 26;
-            var person = CreatePersonObject(id, name, age);
+            var person = CreateDefaultPersonObject();
             _personService.Setup(m => m.GetPerson(It.Is<int>(s => s == invalidId))).Returns(() => null);
             _personService.Setup(m => m.Update(It.Is<Person>(s => s == person))).Verifiable();
             var controller = new PeopleController(_personService.Object);
@@ -238,14 +227,13 @@
         public void PeopleController_Delete_PersonDeleted_ReturnsOkResult_Test()
         {
             // Arrange
-            const int id = 1;
             var person = new Person();
             _personService.Setup(m => m.GetPerson(It.IsAny<int>())).Returns(person);
             _personService.Setup(m => m.Update(It.IsAny<Person>())).Verifiable();
             var controller = new PeopleController(_personService.Object);
 
             // Act
-            var result = controller.Delete(id) as OkResult;
+            var result = controller.Delete(Id) as OkResult;
 
             // Assert
             IsNotNull(result);
