@@ -14,6 +14,8 @@
     [TestFixture]
     public class CustomAuthorizationServerProviderTests
     {
+        private const string Username = "user1";
+        private const string Password = "pass123";
         private Mock<ApplicationUserManager> _applicationUserManagerMock;
 
         [SetUp]
@@ -27,49 +29,68 @@
         public async Task GrantResourceOwnerCredentials_UserIsNotFound_GeneratesInvalidGrant_Test()
         {
             // Arrange
-            const string username = "user1";
-            const string password = "pass123";
+
             var owinContextMock = new Mock<IOwinContext>();
-            var contextMock = new Mock<OAuthGrantResourceOwnerCredentialsContext>(owinContextMock.Object,
-                new OAuthAuthorizationServerOptions(), "clientId", username, password, Enumerable.Empty<string>());
-            _applicationUserManagerMock.Setup(
-                m => m.FindAsync(It.Is<string>(u => u == username), It.Is<string>(u => u == password)))
-                .ReturnsAsync(null).Verifiable();
-            var provider = new CustomAuthorizationServerProvider { UserManager = _applicationUserManagerMock.Object };
+            var contextMock = GetContextMock(owinContextMock);
+            SetupApplicationUserManagerMock(null);
+            var provider = new CustomAuthorizationServerProvider
+            {
+                UserManager = _applicationUserManagerMock.Object
+            };
 
             // Act
             await provider.GrantResourceOwnerCredentials(contextMock.Object);
 
             // Assert
-            _applicationUserManagerMock.Verify(m => m.FindAsync(It.Is<string>(u => u == username), It.Is<string>(u => u == password)), Times.Once());
+            _applicationUserManagerMock.Verify(m => m.FindAsync(It.Is<string>(u => u == Username), It.Is<string>(u => u == Password)), Times.Once());
             AreEqual(true, contextMock.Object.HasError);
+        }
+
+        private void SetupApplicationUserManagerMock(IdentityUser dataToReturn)
+        {
+            _applicationUserManagerMock.Setup(
+                m => m.FindAsync(It.Is<string>(u => u == Username), It.Is<string>(u => u == Password)))
+                .ReturnsAsync(dataToReturn).Verifiable();
+        }
+
+        private Mock<OAuthGrantResourceOwnerCredentialsContext> GetContextMock(Mock<IOwinContext> owinContextMock)
+        {
+            var contextMock = new Mock<OAuthGrantResourceOwnerCredentialsContext>(owinContextMock.Object,
+                new OAuthAuthorizationServerOptions(), "clientId", Username, Password, Enumerable.Empty<string>());
+            return contextMock;
         }
 
         [Test]
         public async Task GrantResourceOwnerCredentials_UserIsFound_GeneratesValidGrant_Test()
         {
             // Arrange
-            const string id = "12345";
-            const string username = "user1";
-            const string password = "pass123";
+            var identityUser = CreateIdentityUser();
             var owinContextMock = new Mock<IOwinContext>();
-            var contextMock = new Mock<OAuthGrantResourceOwnerCredentialsContext>(owinContextMock.Object,
-                new OAuthAuthorizationServerOptions(), "clientId", username, password, Enumerable.Empty<string>());
-            _applicationUserManagerMock.Setup(
-                m => m.FindAsync(It.Is<string>(u => u == username), It.Is<string>(u => u == password)))
-                .ReturnsAsync(new IdentityUser
-                {
-                    Id = id,
-                    UserName = username
-                }).Verifiable();
-            var provider = new CustomAuthorizationServerProvider { UserManager = _applicationUserManagerMock.Object };
+            var contextMock = GetContextMock(owinContextMock);
+            SetupApplicationUserManagerMock(identityUser);
+            var provider = new CustomAuthorizationServerProvider
+            {
+                UserManager = _applicationUserManagerMock.Object
+            };
 
             // Act
             await provider.GrantResourceOwnerCredentials(contextMock.Object);
 
             // Assert
-            _applicationUserManagerMock.Verify(m => m.FindAsync(It.Is<string>(u => u == username), It.Is<string>(u => u == password)), Times.Once());
+            _applicationUserManagerMock.Verify(m => m.FindAsync(It.Is<string>(u => u == Username),
+                It.Is<string>(u => u == Password)), Times.Once());
             AreEqual(false, contextMock.Object.HasError);
+        }
+
+        private static IdentityUser CreateIdentityUser()
+        {
+            const string id = "12345";
+            var identityUser = new IdentityUser
+            {
+                Id = id,
+                UserName = Username
+            };
+            return identityUser;
         }
     }
 }
