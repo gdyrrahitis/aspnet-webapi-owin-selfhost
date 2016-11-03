@@ -9,6 +9,7 @@
     using Domain.Repository;
     using Moq;
     using NUnit.Framework;
+    using StubEntities.Common;
     using static NUnit.Framework.Assert;
 
     [TestFixture]
@@ -42,7 +43,7 @@
             var entityStubs = SetupEntityStubsQueryable();
             var dbSetMock = GetDbSetMock();
             SetupIQueryable(dbSetMock, entityStubs);
-            _dbContextMock.Setup(s => s.GetDbSet<EntityStub>()).Returns(dbSetMock.Object);
+            _dbContextMock.Setup(s => s.GetDbSet<CommonStubEntity>()).Returns(dbSetMock.Object);
             var repository = CreateRepository();
 
             // Act
@@ -53,43 +54,43 @@
             AreEqual(3, result.Count);
         }
 
-        private static IQueryable<EntityStub> SetupEntityStubsQueryable()
+        private static IQueryable<CommonStubEntity> SetupEntityStubsQueryable()
         {
-            var entityStubs = new List<EntityStub>
+            var entityStubs = new List<CommonStubEntity>
             {
-                new EntityStub(),
-                new EntityStub(),
-                new EntityStub()
+                new CommonStubEntity(),
+                new CommonStubEntity(),
+                new CommonStubEntity()
             }.AsQueryable();
             return entityStubs;
         }
 
-        private static Mock<IDbSet<EntityStub>> GetDbSetMock()
+        private static Mock<IDbSet<CommonStubEntity>> GetDbSetMock()
         {
-            var dbSetMock = new Mock<IDbSet<EntityStub>>();
+            var dbSetMock = new Mock<IDbSet<CommonStubEntity>>();
             return dbSetMock;
         }
 
-        private static void SetupIQueryable(Mock<IDbSet<EntityStub>> dbSetMock, IQueryable entityStubs)
+        private static void SetupIQueryable(Mock<IDbSet<CommonStubEntity>> dbSetMock, IQueryable entityStubs)
         {
             dbSetMock.Setup(s => s.Provider).Returns(entityStubs.Provider);
             dbSetMock.Setup(s => s.Expression).Returns(entityStubs.Expression);
             dbSetMock.Setup(s => s.ElementType).Returns(entityStubs.ElementType);
         }
 
-        private Repository<EntityStub, string> CreateRepository()
+        private Repository<CommonStubEntity, string> CreateRepository()
         {
-            return new Repository<EntityStub, string>(_dbContextMock.Object);
+            return new Repository<CommonStubEntity, string>(_dbContextMock.Object);
         }
 
         [Test]
         public void All_ReturnsAnEmptyCollection_Test()
         {
             // Arrange
-            var expected = Enumerable.Empty<EntityStub>().AsQueryable();
+            var expected = Enumerable.Empty<CommonStubEntity>().AsQueryable();
             var dbSetMock = GetDbSetMock();
             SetupIQueryable(dbSetMock, expected);
-            _dbContextMock.Setup(s => s.GetDbSet<EntityStub>()).Returns(dbSetMock.Object);
+            _dbContextMock.Setup(s => s.GetDbSet<CommonStubEntity>()).Returns(dbSetMock.Object);
             var repository = CreateRepository();
 
             // Act
@@ -104,10 +105,10 @@
         {
             // Arrange
             const string key = "123";
-            var entityStub = new EntityStub();
+            var entityStub = new CommonStubEntity();
             var dbSetMock = GetDbSetMock();
             dbSetMock.Setup(m => m.Find(It.Is<string>(s => s == key))).Returns(entityStub);
-            _dbContextMock.Setup(s => s.GetDbSet<EntityStub>()).Returns(() => dbSetMock.Object);
+            _dbContextMock.Setup(s => s.GetDbSet<CommonStubEntity>()).Returns(() => dbSetMock.Object);
             var repository = CreateRepository();
 
             // Act
@@ -115,7 +116,7 @@
 
             // Assert
             IsNotNull(result);
-            IsInstanceOf<EntityStub>(result);
+            IsInstanceOf<CommonStubEntity>(result);
         }
 
         [Test]
@@ -125,7 +126,7 @@
             const string nonExistentKey = "1234";
             var dbSetMock = GetDbSetMock();
             dbSetMock.Setup(m => m.Find(It.Is<string>(s => s == nonExistentKey))).Returns(() => null);
-            _dbContextMock.Setup(s => s.GetDbSet<EntityStub>()).Returns(() => dbSetMock.Object);
+            _dbContextMock.Setup(s => s.GetDbSet<CommonStubEntity>()).Returns(() => dbSetMock.Object);
             var repository = CreateRepository();
 
             // Act
@@ -139,17 +140,17 @@
         public void Update_EntryWasCalledOnceForModifying_SaveChangesWasCalledOnce_Test()
         {
             // Arrange
-            _dbContextMock.Setup(m => m.Entry(It.IsAny<EntityStub>(), 
-                It.IsAny<Action<DbEntityEntry<EntityStub>>>())).Verifiable();
+            _dbContextMock.Setup(m => m.Entry(It.IsAny<CommonStubEntity>(), 
+                It.IsAny<Action<DbEntityEntry<CommonStubEntity>>>())).Verifiable();
             _dbContextMock.Setup(m => m.SaveChanges()).Verifiable();
             var repository = CreateRepository();
 
             // Act
-            repository.Update(new EntityStub());
+            repository.Update(new CommonStubEntity());
 
             // Assert
-            _dbContextMock.Verify(m => m.Entry(It.IsAny<EntityStub>(), 
-                It.IsAny<Action<DbEntityEntry<EntityStub>>>()), Times.Once());
+            _dbContextMock.Verify(m => m.Entry(It.IsAny<CommonStubEntity>(), 
+                It.IsAny<Action<DbEntityEntry<CommonStubEntity>>>()), Times.Once());
             _dbContextMock.Verify(m => m.SaveChanges(), Times.Once());
         }
 
@@ -157,17 +158,17 @@
         public void Delete_EntryWasCalledOnce_SaveChangesWasCalledOnce_Test()
         {
             // Arrange
-            _dbContextMock.Setup(m => m.Entry(It.IsAny<EntityStub>(), 
-                It.IsAny<Action<DbEntityEntry<EntityStub>>>())).Verifiable();
+            _dbContextMock.Setup(m => m.Entry(It.IsAny<CommonStubEntity>(), 
+                It.IsAny<Action<DbEntityEntry<CommonStubEntity>>>())).Verifiable();
             _dbContextMock.Setup(m => m.SaveChanges()).Verifiable();
             var repository = CreateRepository();
 
             // Act
-            repository.Delete(new EntityStub());
+            repository.Delete(new CommonStubEntity());
 
             // Assert
-            _dbContextMock.Verify(m => m.Entry(It.IsAny<EntityStub>(), 
-                It.IsAny<Action<DbEntityEntry<EntityStub>>>()), Times.Once());
+            _dbContextMock.Verify(m => m.Entry(It.IsAny<CommonStubEntity>(), 
+                It.IsAny<Action<DbEntityEntry<CommonStubEntity>>>()), Times.Once());
             _dbContextMock.Verify(m => m.SaveChanges(), Times.Once());
         }
 
@@ -175,20 +176,18 @@
         public void Create_EntryWasCalledOnce_SaveChangesWasCalledOnce_Test()
         {
             // Arrange
-            _dbContextMock.Setup(m => m.Entry(It.IsAny<EntityStub>(), 
-                It.IsAny<Action<DbEntityEntry<EntityStub>>>())).Verifiable();
+            _dbContextMock.Setup(m => m.Entry(It.IsAny<CommonStubEntity>(), 
+                It.IsAny<Action<DbEntityEntry<CommonStubEntity>>>())).Verifiable();
             _dbContextMock.Setup(m => m.SaveChanges()).Verifiable();
             var repository = CreateRepository();
 
             // Act
-            repository.Create(new EntityStub());
+            repository.Create(new CommonStubEntity());
 
             // Assert
-            _dbContextMock.Verify(m => m.Entry(It.IsAny<EntityStub>(), 
-                It.IsAny<Action<DbEntityEntry<EntityStub>>>()), Times.Once());
+            _dbContextMock.Verify(m => m.Entry(It.IsAny<CommonStubEntity>(), 
+                It.IsAny<Action<DbEntityEntry<CommonStubEntity>>>()), Times.Once());
             _dbContextMock.Verify(m => m.SaveChanges(), Times.Once());
         }
-
-        public class EntityStub { }
     }
 }

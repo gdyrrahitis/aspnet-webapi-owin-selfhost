@@ -4,6 +4,7 @@
     using Domain.Context;
     using Microsoft.AspNet.Identity.EntityFramework;
     using NUnit.Framework;
+    using StubEntities.Common;
     using static NUnit.Framework.Assert;
 
     [TestFixture]
@@ -47,7 +48,7 @@
         {
             // Arrange
             var context = ApplicationDbContext.Create();
-            var entityStub = new EntityStub();
+            var entityStub = new CommonStubEntity();
 
             // Act | Assert
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -63,13 +64,11 @@
 
             // Act | Assert
 #pragma warning disable CS0618 // Type or member is obsolete
-            Throws<ApplicationException>(() => context.Set(typeof(EntityStub)), "Use overload for unit tests.");
+            Throws<ApplicationException>(() => context.Set(typeof(CommonStubEntity)), "Use overload for unit tests.");
 #pragma warning restore CS0618 // Type or member is obsolete
 #pragma warning disable CS0618 // Type or member is obsolete
-            Throws<ApplicationException>(() => context.Set<EntityStub>(), "Use overload for unit tests.");
+            Throws<ApplicationException>(() => context.Set<CommonStubEntity>(), "Use overload for unit tests.");
 #pragma warning restore CS0618 // Type or member is obsolete
         }
-
-        private class EntityStub { }
     }
 }
