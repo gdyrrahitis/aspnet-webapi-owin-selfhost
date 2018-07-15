@@ -2,7 +2,7 @@
 An ASP.NET Web API 2 OWIN self-hosted application, with standard and secure `ApiController`'s.
 
 # Code
-Much of this code is explained on following blog posts, [tour in different abstraction levels](https://georgedyrra.wordpress.com/2016/11/03/unit-testing-and-code-coverage-for-asp-net-web-api-12/) as well as [tour on unit tests and code coverage](https://georgedyrra.wordpress.com/2016/11/03/unit-testing-and-code-coverage-for-asp-net-web-api-22/).
+Much of this code is explained on following blog posts, [tour in different abstraction levels]((http://codereform.com/blog/post/unit-testing-and-code-coverage-for-asp-net-web-api-12/) as well as [tour on unit tests and code coverage]((http://codereform.com/blog/post/unit-testing-and-code-coverage-for-asp-net-web-api-22/).
 
 API is selfhosted with OWIN, running in `Startup.cs`
 ```
